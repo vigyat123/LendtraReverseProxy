@@ -66,7 +66,7 @@ http {
         listen 80 default_server;
         listen [::]:80 default_server;
         server_name ec2-34-229-84-140.compute-1.amazonaws.com;
-        return 302 https://$server_name$request_uri;
+        return 301 https://$server_name$request_uri;
                  
     }
     
@@ -86,10 +86,10 @@ http {
         ssl_prefer_server_ciphers  on;
         
 # Try Files Directive needs to be investigated. (Check CFM & VCM Applicaion)
-#       location / {
-#            try_files $uri $uri/ /index.html;
-#       }
-       location = /50x.html {
+      location / {
+           proxy_pass https://ec2-34-229-232-200.compute-1.amazonaws.com;
+      }
+      location = /50x.html {
            root   html;
       }
   }
